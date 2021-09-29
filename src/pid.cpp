@@ -138,12 +138,12 @@ bool Pid::init(const ros::NodeHandle &node, const bool quiet)
   }
   nh.param("antiwindup", gains.antiwindup_, false);
 
-  nh.param("publish_state", publish_state_, false);
-
+  nh.param("publish_state", publish_state_, true);
+  publish_state_ = true;
   if(publish_state_)
   {
     state_publisher_.reset(new realtime_tools::RealtimePublisher<control_msgs::PidState>());
-    state_publisher_->init(nh, "state", 1);
+    state_publisher_->init(nh, "pid_state", 1);
   }
 
   setGains(gains);
